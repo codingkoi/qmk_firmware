@@ -8,6 +8,8 @@
 #define SYMB 1 // Symbols
 #define STENO 2 // Steno Virtual Serial
 
+#define DEL_WORD LCTL(KC_BSPC)
+
 enum custom_keycodes {
     PLACEHOLDER = SAFE_RANGE, // can always be here
     VRSN, // print version info
@@ -45,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	KC_LCTL,       KC_A,         KC_S,     KC_D,    KC_F,   KC_G,
 	KC_LSPO,        KC_Z,         KC_X,     KC_C,    KC_V,   KC_B,   MO(SYMB),
 	KC_LWIN,        KC_LALT,      KC_BSLS,  KC_MINS, KC_EQL,
-						      KC_ERAS, KC_DEL,
+						     DEL_WORD, KC_DEL,
 							       KC_HOME,
 					      KC_SPC, KC_BSPC, KC_END,
 	// right hand

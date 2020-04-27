@@ -37,34 +37,34 @@ keyframe_animation_t Fade_in_all_leds = {
     .num_frames = 1,
     .loop = false,
     .frame_lengths = {
-        CROSSFADE_TIME,
+	CROSSFADE_TIME,
     },
     .frame_functions = {
-        led_backlight_keyframe_fade_in_all,
+	led_backlight_keyframe_fade_in_all,
     },
 };
 keyframe_animation_t decreasing_gradient = {
     .num_frames = 8,
     .loop = true,
     .frame_lengths = {
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
     },
     .frame_functions = {
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_mirror_orientation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_normal_orientation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_mirror_orientation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_normal_orientation,
 
     },
 };
@@ -131,8 +131,8 @@ bool led_backlight_keyframe_one_period_sweep(keyframe_animation_t* animation, vi
     float current_pos = frame_length - animation->time_left_in_frame;
     float t = current_pos / frame_length;
     for (int i=0; i< NUM_COLS; i++) {
-        uint8_t color = off_on_off_gradient(t*2, i, NUM_COLS);
-        gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
+	uint8_t color = off_on_off_gradient(t*2, i, NUM_COLS);
+	gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
     }
     return true;
 }
@@ -143,8 +143,8 @@ bool led_backlight_keyframe_half_period_sweep_to_on(keyframe_animation_t* animat
     float current_pos = frame_length - animation->time_left_in_frame;
     float t = current_pos / frame_length;
     for (int i=0; i< NUM_COLS; i++) {
-        uint8_t color = off_on_gradient(t*2, i, NUM_COLS);
-        gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
+	uint8_t color = off_on_gradient(t*2, i, NUM_COLS);
+	gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
     }
     return true;
 }
@@ -154,8 +154,8 @@ bool led_backlight_keyframe_half_period_sweep_to_off(keyframe_animation_t* anima
     float current_pos = frame_length - animation->time_left_in_frame;
     float t = current_pos / frame_length;
     for (int i=0; i< NUM_COLS; i++) {
-        uint8_t color = on_off_gradient(t*2, i, NUM_COLS);
-        gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
+	uint8_t color = on_off_gradient(t*2, i, NUM_COLS);
+	gdispGDrawLine(LED_DISPLAY, i, 0, i, NUM_ROWS - 1, LUMA2COLOR(color));
     }
     return true;
 }
@@ -194,32 +194,32 @@ keyframe_animation_t sweep_on_sweep_off_left_and_right = {
     .num_frames = 12,
     .loop = true,
     .frame_lengths = {
-        0,
-        1,
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left  on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left off
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right off
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right off
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left off
-        0,           // normal leds
+	0,
+	1,
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left  on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left off
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right off
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right off
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left off
+	0,           // normal leds
     },
     .frame_functions = {
-        led_backlight_keyframe_mirror_orientation,
-        led_backlight_keyframe_fade_out_all,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_on,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_off,
-        led_backlight_keyframe_normal_orientation,
-        led_backlight_keyframe_half_period_sweep_to_on,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_off,
-        keyframe_no_operation,
-        led_backlight_keyframe_mirror_orientation,
+	led_backlight_keyframe_mirror_orientation,
+	led_backlight_keyframe_fade_out_all,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_on,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_off,
+	led_backlight_keyframe_normal_orientation,
+	led_backlight_keyframe_half_period_sweep_to_on,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_off,
+	keyframe_no_operation,
+	led_backlight_keyframe_mirror_orientation,
 
     },
 };
@@ -227,28 +227,28 @@ keyframe_animation_t both_sides_fade_across = {
     .num_frames = 10,
     .loop = true,
     .frame_lengths = {
-        0,
-        1,
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
+	0,
+	1,
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
     },
     .frame_functions = {
-        led_backlight_keyframe_mirror_orientation,
-        led_backlight_keyframe_fade_out_all,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_normal_orientation,
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_mirror_orientation,
-        keyframe_no_operation,
-        keyframe_no_operation,
+	led_backlight_keyframe_mirror_orientation,
+	led_backlight_keyframe_fade_out_all,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_normal_orientation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_mirror_orientation,
+	keyframe_no_operation,
+	keyframe_no_operation,
     },
 };
 
@@ -257,28 +257,28 @@ keyframe_animation_t sweep_on_sweep_off_left_and_right = {
     .num_frames = 10,
     .loop = true,
     .frame_lengths = {
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left  on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left off
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right off
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left on
-        gfxMillisecondsToTicks(GRADIENT_TIME), // right off
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left off
-        0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left  on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left off
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right off
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left on
+	gfxMillisecondsToTicks(GRADIENT_TIME), // right off
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left off
+	0,           // normal leds
     },
     .frame_functions = {
-        led_backlight_keyframe_half_period_sweep_to_on,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_off,
-        keyframe_no_operation,
-        led_backlight_keyframe_mirror_orientation,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_on,
-        keyframe_no_operation,
-        led_backlight_keyframe_half_period_sweep_to_off,
-        led_backlight_keyframe_normal_orientation,
+	led_backlight_keyframe_half_period_sweep_to_on,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_off,
+	keyframe_no_operation,
+	led_backlight_keyframe_mirror_orientation,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_on,
+	keyframe_no_operation,
+	led_backlight_keyframe_half_period_sweep_to_off,
+	led_backlight_keyframe_normal_orientation,
 
     },
 };
@@ -286,24 +286,24 @@ keyframe_animation_t both_sides_fade_across = {
     .num_frames = 8,
     .loop = true,
     .frame_lengths = {
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
-        0,           // mirror leds
-        gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
-        0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left to rigt (outside in)
+	0,           // mirror leds
+	gfxMillisecondsToTicks(GRADIENT_TIME), // left_to_right (mirrored, so inside out)
+	0,           // normal leds
     },
     .frame_functions = {
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_mirror_orientation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        keyframe_no_operation,
-        led_backlight_keyframe_one_period_sweep,
-        led_backlight_keyframe_normal_orientation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_mirror_orientation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	keyframe_no_operation,
+	led_backlight_keyframe_one_period_sweep,
+	led_backlight_keyframe_normal_orientation,
 
     },
 };
@@ -332,53 +332,53 @@ keyframe_animation_t both_sides_fade_across = {
 static void get_visualizer_layer_and_color(visualizer_state_t* state) {
     uint8_t saturation = 255;
     /* if (state->status.leds & (1u << USB_LED_CAPS_LOCK)) {
-        saturation = 255;
+	saturation = 255;
     } */
 
     if (state->status.layer & 0x400) {
-        state->target_lcd_color = LCD_COLOR(OCEAN, saturation, 0xFF);
-        state->layer_text = "STENOGRAPHY";
+	state->target_lcd_color = LCD_COLOR(OCEAN, saturation, 0xFF);
+	state->layer_text = "STENOGRAPHY";
     }
     else if (state->status.layer & 0x200) {
-        state->target_lcd_color = LCD_COLOR(GREEN, saturation, 0xFF);
-        state->layer_text = "FUNCTION";
+	state->target_lcd_color = LCD_COLOR(GREEN, saturation, 0xFF);
+	state->layer_text = "FUNCTION";
     }
     else if (state->status.layer & 0x100) {
-        state->target_lcd_color = LCD_COLOR(MAGENTA, saturation, 0xFF);
-        state->layer_text = "Shortcuts Layer";
-        stop_keyframe_animation(&sweep_on_sweep_off_left_and_right);
-        start_keyframe_animation(&led_test_animation);
+	state->target_lcd_color = LCD_COLOR(MAGENTA, saturation, 0xFF);
+	state->layer_text = "Shortcuts Layer";
+	stop_keyframe_animation(&sweep_on_sweep_off_left_and_right);
+	start_keyframe_animation(&led_test_animation);
     }
     else    if (state->status.layer & 0x80) {
-        state->target_lcd_color = LCD_COLOR(VIOLET, saturation, 0xFF);
-        state->layer_text = "Plover";
+	state->target_lcd_color = LCD_COLOR(VIOLET, saturation, 0xFF);
+	state->layer_text = "Plover";
     }
     else if (state->status.layer & 0x40) {
-        state->target_lcd_color = LCD_COLOR(RASPBERRY, saturation, 0xFF);
-        state->layer_text = "Mirrored Symbols";
+	state->target_lcd_color = LCD_COLOR(RASPBERRY, saturation, 0xFF);
+	state->layer_text = "Mirrored Symbols";
     }
     else if (state->status.layer & 0x20) {
-        state->target_lcd_color = LCD_COLOR(RED, saturation, 0xFF);
-        state->layer_text = "Symbols";
+	state->target_lcd_color = LCD_COLOR(RED, saturation, 0xFF);
+	state->layer_text = "Symbols";
     }
     else if (state->status.layer & 0x8) {
-        state->target_lcd_color = LCD_COLOR(OCEAN, saturation, 0xFF);
-        state->layer_text = "Mirrored Dvorak";
+	state->target_lcd_color = LCD_COLOR(OCEAN, saturation, 0xFF);
+	state->layer_text = "Mirrored Dvorak";
     }
     else if (state->status.layer & 0x4) {
-        state->target_lcd_color = LCD_COLOR(BLUE, saturation, 0xFF);
-        state->layer_text = "Stenography";
-        stop_keyframe_animation(&led_test_animation)
-        start_keyframe_animation(&sweep_on_sweep_off_left_and_right);
+	state->target_lcd_color = LCD_COLOR(BLUE, saturation, 0xFF);
+	state->layer_text = "Stenography";
+	stop_keyframe_animation(&led_test_animation);
+	start_keyframe_animation(&sweep_on_sweep_off_left_and_right);
     }
     else if (state->status.layer & 0x2) {
-        state->target_lcd_color = LCD_COLOR(ORANGE, saturation, 0xFF);
-        state->layer_text = "Functions";
+	state->target_lcd_color = LCD_COLOR(ORANGE, saturation, 0xFF);
+	state->layer_text = "Functions";
     }
     else {
-        state->target_lcd_color = LCD_COLOR(YELLOW, saturation, 0xFF);
-        state->layer_text = "Qwerty";
-        stop_keyframe_animation(&led_test_animation);
-        start_keyframe_animation(&Fade_in_all_leds);
+	state->target_lcd_color = LCD_COLOR(YELLOW, saturation, 0xFF);
+	state->layer_text = "Qwerty";
+	stop_keyframe_animation(&led_test_animation);
+	start_keyframe_animation(&Fade_in_all_leds);
     }
 }
